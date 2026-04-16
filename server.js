@@ -1,5 +1,14 @@
+const https = require('https');
+const fs = require('fs');
 const app = require('./app');
 
-app.listen(3000, () => {
-    console.log('Servidor corriendo en http://localhost:3000');
+// Leer certificados
+const options = {
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
+};
+
+// Crear servidor HTTPS
+https.createServer(options, app).listen(8080, () => {
+    console.log('Servidor HTTPS corriendo en https://localhost:8080');
 });
